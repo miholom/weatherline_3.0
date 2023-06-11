@@ -1,25 +1,15 @@
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
-from aiogram.utils.keyboard import ReplyKeyboardBuilder
-
+from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from aiogram.utils.keyboard import InlineKeyboardBuilder
 from lexicon.lexicon_ru import LEXICON_RU
 
-# ------- Создаем клавиатуру через ReplyKeyboardBuilder -------
 
-# Создаем кнопки с ответами согласия и отказа
-button_yes: KeyboardButton = KeyboardButton(text=LEXICON_RU['yes_button'])
-button_no: KeyboardButton = KeyboardButton(text=LEXICON_RU['no_button'], request_location=True)
-
-# Инициализируем билдер для клавиатуры с кнопками "Давай" и "Не хочу!"
-yes_no_kb_builder: ReplyKeyboardBuilder = ReplyKeyboardBuilder()
-
-# Добавляем кнопки в билдер с параметром width=2
-yes_no_kb_builder.row(button_yes, button_no, width=2)
-
-# Создаем клавиатуру с кнопками "Давай!" и "Не хочу!"
-yes_no_kb = yes_no_kb_builder.as_markup(
-                                one_time_keyboard=True,
-                                resize_keyboard=True)
-
-keyboard: ReplyKeyboardMarkup = yes_no_kb_builder.as_markup(
-                                    resize_keyboard=True,
-                                    one_time_keyboard=True)
+# Функция, генерирующая клавиатуру для страницы книги
+def create_pagination_keyboard(*buttons: str) -> InlineKeyboardMarkup:
+    # Инициализируем билдер
+    kb_builder: InlineKeyboardBuilder = InlineKeyboardBuilder()
+    # Добавляем в билдер ряд с кнопками
+    kb_builder.row(*[InlineKeyboardButton(
+        text=LEXICON_RU[button] if button in LEXICON_RU else button,
+        callback_data=button) for button in buttons])
+    # Возвращаем объект инлайн-клавиатуры
+    return kb_builder.as_markup()
