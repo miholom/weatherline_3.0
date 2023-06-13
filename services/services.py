@@ -1,5 +1,10 @@
 import requests
 
+TIME = ['07:00:00', 
+        '12:00:00', 
+        '17:00:00', 
+        '21:02:00',]
+
 def location_city():
     # get gps coordinates from geopy
     import json

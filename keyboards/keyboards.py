@@ -10,6 +10,6 @@ def create_pagination_keyboard(*buttons: str) -> InlineKeyboardMarkup:
     # Добавляем в билдер ряд с кнопками
     kb_builder.row(*[InlineKeyboardButton(
         text=LEXICON_RU[button] if button in LEXICON_RU else button,
-        callback_data=button) for button in buttons])
+        callback_data=button) for button in buttons], width=1)
     # Возвращаем объект инлайн-клавиатуры
     return kb_builder.as_markup()
